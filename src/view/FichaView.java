@@ -62,7 +62,7 @@ public class FichaView extends javax.swing.JFrame {
         jcbAluno = new javax.swing.JComboBox<>();
         jcbInstrutor = new javax.swing.JComboBox<>();
         jtxIdFicha = new javax.swing.JTextField();
-        jtxDataCriacao = new javax.swing.JFormattedTextField();
+        jftDataCriacao = new javax.swing.JFormattedTextField();
         jbCadastrar = new javax.swing.JButton();
         jbEditar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
@@ -99,6 +99,7 @@ public class FichaView extends javax.swing.JFrame {
         jLabel5.setText("FICHA");
 
         jcbAluno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbAluno.setToolTipText("");
         jcbAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbAlunoActionPerformed(evt);
@@ -113,7 +114,7 @@ public class FichaView extends javax.swing.JFrame {
             }
         });
 
-        jtxDataCriacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        jftDataCriacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
         jbCadastrar.setText("Cadastrar");
         jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -130,6 +131,11 @@ public class FichaView extends javax.swing.JFrame {
         });
 
         jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
 
         jtFicha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -187,7 +193,7 @@ public class FichaView extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtxDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jftDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jbExcluir))
                             .addGroup(layout.createSequentialGroup()
@@ -237,13 +243,13 @@ public class FichaView extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jtxDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jftDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCadastrar)
                     .addComponent(jbEditar)
                     .addComponent(jbExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -263,85 +269,85 @@ public class FichaView extends javax.swing.JFrame {
 
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
         if (jcbAluno.getSelectedIndex() == 0) {
-        JOptionPane.showMessageDialog(null, "Selecione um aluno.");
-        return;
-    }
-    
-    if (jcbInstrutor.getSelectedIndex() == 0) {
-        JOptionPane.showMessageDialog(null, "Selecione um instrutor.");
-        return;
-    }
-
-    if (jtxIdFicha.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Preencha o objetivo.");
-        return;
-    }
-    
-    if (jtxDataCriacao.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Preencha a data.");
-        return;
-    }
-
-    // Validação da data
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    sdf.setLenient(false);
-    java.sql.Date dataSQL;
-
-    try {
-        java.util.Date data = sdf.parse(jtxDataCriacao.getText().trim());
-        dataSQL = new java.sql.Date(data.getTime());
-    } catch (ParseException e) {
-        JOptionPane.showMessageDialog(null, "Data inválida. Use o formato dd/MM/yyyy.");
-        return;
-    }
-
-    String nomeAluno = (String) jcbAluno.getSelectedItem();
-    String nomeInstrutor = (String) jcbInstrutor.getSelectedItem();
-    String objetivo = jtxIdFicha.getText();
-
-    // Conexão e inserção no banco
-    Conexao c = new Conexao();
-    c.conectar();
-    Connection conn = c.conector;
-
-    try {
-        String sql = """
-            INSERT INTO ficha (id_aluno, id_instrutor, objetivo, data_criacao)
-            VALUES (
-                (SELECT id_aluno FROM aluno WHERE nome = ?),
-                (SELECT id_instrutor FROM instrutor WHERE nome = ?),
-                ?, ?
-            )
-        """;
-
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setString(1, nomeAluno);
-        stmt.setString(2, nomeInstrutor);
-        stmt.setString(3, objetivo);
-        stmt.setDate(4, dataSQL);
-
-        int linhasAfetadas = stmt.executeUpdate();
-
-        if (linhasAfetadas > 0) {
-            JOptionPane.showMessageDialog(null, "Ficha cadastrada com sucesso!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro: aluno ou instrutor não encontrados.");
+            JOptionPane.showMessageDialog(null, "Selecione um aluno.");
+            return;
         }
 
-        stmt.close();
-        c.desconectar();
+        if (jcbInstrutor.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Selecione um instrutor.");
+            return;
+        }
 
-        limparCampos();
+        if (jtxObjetivo.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha o objetivo.");
+        }
 
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + e.getMessage());
-    }
+
+        if (jftDataCriacao.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha a data.");
+            return;
+        }
+
+        // Validação da data
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);
+        java.sql.Date dataSQL;
+
+        try {
+            java.util.Date data = sdf.parse(jftDataCriacao.getText().trim());
+            dataSQL = new java.sql.Date(data.getTime());
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Data inválida. Use o formato dd/MM/yyyy.");
+            return;
+        }
+
+        String nomeAluno = (String) jcbAluno.getSelectedItem();
+        String nomeInstrutor = (String) jcbInstrutor.getSelectedItem();
+        String objetivo = jtxObjetivo.getText();
+
+        // Conexão e inserção no banco
+        Conexao c = new Conexao();
+        c.conectar();
+        Connection conn = c.conector;
+
+        try {
+            String sql = """
+                INSERT INTO ficha (id_aluno, id_instrutor, objetivo, data_criacao)
+                VALUES (
+                    (SELECT id_aluno FROM aluno WHERE nome = ?),
+                    (SELECT id_instrutor FROM instrutor WHERE nome = ?),
+                    ?, ?
+                )
+            """;
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, nomeAluno);
+            stmt.setString(2, nomeInstrutor);
+            stmt.setString(3, objetivo);
+            stmt.setDate(4, dataSQL);
+
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                JOptionPane.showMessageDialog(null, "Ficha cadastrada com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro: aluno ou instrutor não encontrados.");
+            }
+
+            stmt.close();
+            c.desconectar();
+
+            limparCampos();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + e.getMessage());
+        }
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
         if (jtxIdFicha.getText().isEmpty() || 
-            jtxIdFicha.getText().isEmpty() || 
-            jtxDataCriacao.getText().isEmpty() || 
+            jtxObjetivo.getText().isEmpty() || 
+            jftDataCriacao.getText().isEmpty() || 
             jcbAluno.getSelectedIndex() == 0 || 
             jcbInstrutor.getSelectedIndex() == 0) {
 
@@ -352,8 +358,8 @@ public class FichaView extends javax.swing.JFrame {
 
         try {
             int idFicha = Integer.parseInt(jtxIdFicha.getText());
-            String objetivo = jtxIdFicha.getText().trim();
-            String dataStr = jtxDataCriacao.getText().trim();
+            String objetivo = jtxObjetivo.getText().trim();
+            String dataStr = jftDataCriacao.getText().trim();
 
             // Obter aluno selecionado
             String nomeAluno = (String) jcbAluno.getSelectedItem();
@@ -421,8 +427,66 @@ public class FichaView extends javax.swing.JFrame {
     }//GEN-LAST:event_jtxObjetivoActionPerformed
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
-        // TODO add your handling code here:
+        FichaModel ficha = new FichaModel();
+
+        if (jtxIdFicha.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha o código da ficha!",
+                    "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        } else {
+            ficha.setId_ficha(Integer.parseInt(jtxIdFicha.getText()));
+
+            // CONTROLLER
+            FichaController controller = new FichaController();
+            ficha = controller.selecionar(ficha);
+
+            if (ficha == null) {
+                JOptionPane.showMessageDialog(this, "Ficha não encontrada!",
+                        "Retorno BD", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // Preencher os campos com os dados da ficha
+                jcbAluno.setSelectedItem(ficha.getAluno().getNome());
+                jcbInstrutor.setSelectedItem(ficha.getInstrutor().getNome());
+                jtxObjetivo.setText(ficha.getObjetivo());
+
+                // Formatando a data para o campo JFormattedTextField
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                String dataFormatada = sdf.format(ficha.getData_criacao());
+                jftDataCriacao.setText(dataFormatada);
+
+                // Ajustar estado dos botões e campos
+                jbCadastrar.setEnabled(false);
+                jbEditar.setEnabled(true);
+                jbExcluir.setEnabled(true);
+
+                jtxIdFicha.setEditable(false);
+                jcbAluno.setEnabled(true);
+                jcbInstrutor.setEnabled(true);
+                jtxObjetivo.setEditable(true);
+                jftDataCriacao.setEditable(true);
+            }
+        }
+
     }//GEN-LAST:event_jbPesquisarActionPerformed
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        FichaModel ficha = new FichaModel();
+        if(jtxIdFicha.getText().isEmpty())
+            JOptionPane.showMessageDialog(this, "Digite o ID da ficha!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            ficha.setId_ficha(Integer.parseInt(jtxIdFicha.getText()));
+            //CONTROLLER 
+            FichaController controller = new FichaController();
+            if(controller.excluir(ficha)){
+                JOptionPane.showMessageDialog(this, "Excluído com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            }else 
+                JOptionPane.showMessageDialog(this, "Erro ao Excluir!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbExcluirActionPerformed
 
     
     private void preencherTabela(){
@@ -431,48 +495,49 @@ public class FichaView extends javax.swing.JFrame {
         DefaultTableModel modeloTabela = (DefaultTableModel) jtFicha.getModel();
         modeloTabela.setRowCount(0);
         if(lista.isEmpty())
-            JOptionPane.showMessageDialog(this, "Nenhum produto cadastrado!"
+            JOptionPane.showMessageDialog(this, "Nenhuma ficha cadastrada!"
                     ,"Retorno Tela", JOptionPane.ERROR_MESSAGE);
         else{
-            for(FichaModel p: lista){
+            for(FichaModel f: lista){
                 modeloTabela.addRow(new String[]{
-                    String.valueOf(p.getId_ficha()),
-                    String.valueOf(p.getAluno()),
-                    String.valueOf(p.getInstrutor()),
-                    String.valueOf(p.getObjetivo()),
-                    String.valueOf(p.getData_criacao()),
+                    String.valueOf(f.getId_ficha()),
+                    f.getAluno().getNome(),
+                    f.getInstrutor().getNome(),
+                    String.valueOf(f.getObjetivo()),
+                    String.valueOf(f.getData_criacao()),
                 });
             }
         }
     }
     
     private void inicializa() {
-    // Campos de texto
-    jtxIdFicha.setEditable(true);    // ID da ficha
-    jtxIdFicha.setEditable(false);       // Objetivo
-    jtxDataCriacao.setEditable(false);   // Data
 
-    // Botões
-    jbCadastrar.setEnabled(false);
-    jbEditar.setEnabled(false);
-    jbExcluir.setEnabled(false);
-    jbPesquisar.setEnabled(true);
+        // Campos de texto
+        jtxIdFicha.setEditable(true);    // ID da ficha
+        jtxObjetivo.setEditable(true);       // Objetivo
+        jftDataCriacao.setEditable(true);   // Data
 
-    // ComboBox
-    jcbAluno.setEnabled(false);
-    jcbInstrutor.setEnabled(false);
+        // Botões
+        jbCadastrar.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbPesquisar.setEnabled(true);
 
-    // Limpar campos
-    limparCampos();
-}
+        // ComboBox
+        jcbAluno.setEnabled(false);
+        jcbInstrutor.setEnabled(false);
+
+        // Limpar campos
+        limparCampos();
+    }
 
     
     private void limparCampos(){
         jtxIdFicha.setText("");
         jcbAluno.setSelectedIndex(0);
         jcbInstrutor.setSelectedIndex(0);
-        jtxIdFicha.setText("");
-        jtxDataCriacao.setText("");
+        jtxObjetivo.setText("");
+        jftDataCriacao.setText("");
     }
     
     private void preencherComboBox() {
@@ -514,8 +579,8 @@ public class FichaView extends javax.swing.JFrame {
     private javax.swing.JButton jbPesquisar;
     private javax.swing.JComboBox<String> jcbAluno;
     private javax.swing.JComboBox<String> jcbInstrutor;
+    private javax.swing.JFormattedTextField jftDataCriacao;
     private javax.swing.JTable jtFicha;
-    private javax.swing.JFormattedTextField jtxDataCriacao;
     private javax.swing.JTextField jtxIdFicha;
     private javax.swing.JTextField jtxObjetivo;
     // End of variables declaration//GEN-END:variables
