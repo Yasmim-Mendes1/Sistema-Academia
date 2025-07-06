@@ -18,7 +18,7 @@ public class Conexao {
     public void conectar(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url= "jdbc:mysql://localhost:/academia";
+            String url= "jdbc:mysql://localhost:3306/academia";
             String usuario = "root";
             String senha = "root";
             conector = DriverManager.getConnection(url,usuario,senha);

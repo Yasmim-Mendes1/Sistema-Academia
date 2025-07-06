@@ -8,15 +8,36 @@ package view;
  *
  * @author Yasmim Mendes
  */
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import util.Conexao;
+import model.AlunoModel;
+import controller.AlunoController;
+import model.FichaModel;
+import model.InstrutorModel;
+import controller.FichaController;
+import controller.InstrutorController;
+
 public class FichaView extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FichaView.class.getName());
-
-    /**
-     * Creates new form FichaView
-     */
+     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FichaView.class.getName());
+    private List<AlunoModel> listaAlunos = new ArrayList<>();
+    private List<InstrutorModel> listaInstrutores = new ArrayList<>();
+    
+    
     public FichaView() {
         initComponents();
+        preencherComboBox();
     }
 
     /**
@@ -28,21 +49,548 @@ public class FichaView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jPanel1 = new javax.swing.JPanel();
+        jlCodigoFicha = new javax.swing.JLabel();
+        jtxId_Ficha = new javax.swing.JTextField();
+        jbPesquisar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jtxObjetivo = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jbNovo = new javax.swing.JButton();
+        jbSalvar = new javax.swing.JButton();
+        jbEditar = new javax.swing.JButton();
+        jbExcluir = new javax.swing.JButton();
+        jbFechar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtFicha = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        jcbAluno = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jcbInstrutor = new javax.swing.JComboBox<>();
+        jftfDataCriacao = new javax.swing.JFormattedTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jInternalFrame1.setVisible(true);
+
+        jlCodigoFicha.setText("Código:");
+
+        jbPesquisar.setText("Pesquisar");
+        jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPesquisarActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Objetivo:");
+
+        jLabel4.setText("Data:");
+
+        jbNovo.setText("Novo");
+        jbNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNovoActionPerformed(evt);
+            }
+        });
+
+        jbSalvar.setText("Salvar");
+        jbSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalvarActionPerformed(evt);
+            }
+        });
+
+        jbEditar.setText("Editar");
+        jbEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarActionPerformed(evt);
+            }
+        });
+
+        jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
+
+        jbFechar.setText("Fechar");
+        jbFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFecharActionPerformed(evt);
+            }
+        });
+
+        jtFicha.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Código do Aluno", "Código do Instrutor", "Objetivo", "Data de Criação"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtFicha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtFichaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtFicha);
+
+        jLabel5.setText("Código do aluno:");
+
+        jcbAluno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbAlunoActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Código do instrutor:");
+
+        jcbInstrutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbInstrutorActionPerformed(evt);
+            }
+        });
+
+        jftfDataCriacao.setText("       /       /              ");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(98, 98, 98)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel4))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jtxObjetivo, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jftfDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addComponent(jcbInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(4, 4, 4)
+                                        .addComponent(jcbAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jlCodigoFicha)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jtxId_Ficha, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jbPesquisar))))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(jbNovo)
+                        .addGap(20, 20, 20)
+                        .addComponent(jbSalvar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbExcluir)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbFechar)))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jlCodigoFicha)
+                        .addComponent(jtxId_Ficha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbPesquisar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jcbAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jcbInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jtxObjetivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jftfDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbNovo)
+                    .addComponent(jbSalvar)
+                    .addComponent(jbEditar)
+                    .addComponent(jbExcluir)
+                    .addComponent(jbFechar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+        );
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jInternalFrame1)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
+        FichaModel ficha = new FichaModel();
+
+        if (jtxId_Ficha.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha o código da ficha!",
+                "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                ficha.setId_ficha(Integer.parseInt(jtxId_Ficha.getText()));
+
+                FichaController controller = new FichaController();
+                ficha = controller.selecionar(ficha);
+
+                if (ficha == null) {
+                    JOptionPane.showMessageDialog(this, "Ficha não encontrada!",
+                        "Retorno BD", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    if (ficha.getAluno() != null) {
+                        jcbAluno.setSelectedItem(ficha.getAluno());
+                    } else {
+                        jcbAluno.setSelectedIndex(-1);
+                    }
+
+                    if (ficha.getInstrutor() != null) {
+                        jcbInstrutor.setSelectedItem(ficha.getInstrutor());
+                    } else {
+                        jcbInstrutor.setSelectedIndex(-1);
+                    }
+
+                    jtxObjetivo.setText(ficha.getObjetivo());
+
+                    if (ficha.getData_criacao() != null) {
+                        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+                        jftfDataCriacao.setText(sdf.format(ficha.getData_criacao()));
+                    } else {
+                        jftfDataCriacao.setText("");
+                    }
+
+                    jbNovo.setEnabled(false);
+                    jbSalvar.setEnabled(false);
+                    jbEditar.setEnabled(true);
+                    jbExcluir.setEnabled(true);
+
+                    jtxId_Ficha.setEditable(false);
+                    jcbAluno.setEnabled(true);
+                    jcbInstrutor.setEnabled(true);
+                    jtxObjetivo.setEditable(true);
+                    jftfDataCriacao.setEditable(true);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Código inválido!",
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jbPesquisarActionPerformed
+
+    private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
+        jbPesquisar.setEnabled(false);
+        jbNovo.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbSalvar.setEnabled(true);
+
+        jtxId_Ficha.setEditable(false);
+
+        jcbAluno.setEnabled(true);
+        jcbInstrutor.setEnabled(true);
+        jtxObjetivo.setEditable(true);
+        jftfDataCriacao.setEditable(true);
+
+        jtxId_Ficha.setText("");
+        jcbAluno.setSelectedIndex(-1);
+        jcbInstrutor.setSelectedIndex(-1);
+        jtxObjetivo.setText("");
+        jftfDataCriacao.setText("");
+    }//GEN-LAST:event_jbNovoActionPerformed
+
+    private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        Object alunoSelecionado = jcbAluno.getSelectedItem();
+        Object instrutorSelecionado = jcbInstrutor.getSelectedItem();
+        String objetivo = jtxObjetivo.getText();
+        String dataTexto = jftfDataCriacao.getText();
+
+        if (alunoSelecionado == null || instrutorSelecionado == null || objetivo.isEmpty() || dataTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos!",
+                "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            AlunoModel aluno = (AlunoModel) alunoSelecionado;
+            InstrutorModel instrutor = (InstrutorModel) instrutorSelecionado;
+
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date parsedDate = sdf.parse(dataTexto);
+            java.sql.Timestamp dataCriacao = new java.sql.Timestamp(parsedDate.getTime());
+
+            FichaModel ficha = new FichaModel();
+            ficha.setAluno(aluno);
+            ficha.setInstrutor(instrutor);
+            ficha.setObjetivo(objetivo);
+            ficha.setData_criacao(dataCriacao);
+
+            FichaController controller = new FichaController();
+            if (controller.inserir(ficha)) {
+                JOptionPane.showMessageDialog(this, "Ficha inserida com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro ao inserir a ficha!",
+                    "Retorno BD", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (java.text.ParseException e) {
+            JOptionPane.showMessageDialog(this, "Data inválida! Use o formato yyyy-MM-dd.",
+                "Erro de Formato", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassCastException e) {
+            JOptionPane.showMessageDialog(this, "Erro no tipo dos dados selecionados nos combos.",
+                "Erro de Dados", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbSalvarActionPerformed
+
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
+        try {
+            int idFicha = Integer.parseInt(jtxId_Ficha.getText());
+            Object alunoSelecionado = jcbAluno.getSelectedItem();
+            Object instrutorSelecionado = jcbInstrutor.getSelectedItem();
+            String objetivo = jtxObjetivo.getText();
+            String dataTexto = jftfDataCriacao.getText();
+
+            if (alunoSelecionado == null || instrutorSelecionado == null || objetivo.isEmpty() || dataTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos!",
+                    "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            AlunoModel aluno = (AlunoModel) alunoSelecionado;
+            InstrutorModel instrutor = (InstrutorModel) instrutorSelecionado;
+
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date parsedDate = sdf.parse(dataTexto);
+            java.sql.Timestamp dataCriacao = new java.sql.Timestamp(parsedDate.getTime());
+
+            FichaModel ficha = new FichaModel();
+            ficha.setId_ficha(idFicha);
+            ficha.setAluno(aluno);
+            ficha.setInstrutor(instrutor);
+            ficha.setObjetivo(objetivo);
+            ficha.setData_criacao(dataCriacao);
+
+            FichaController controller = new FichaController();
+            if (controller.editar(ficha)) {
+                JOptionPane.showMessageDialog(this, "Atualização realizada com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro ao editar ficha!",
+                    "Retorno BD", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID da ficha inválido!",
+                "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (java.text.ParseException e) {
+            JOptionPane.showMessageDialog(this, "Data inválida! Use o formato yyyy-MM-dd.",
+                "Erro de Formato", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassCastException e) {
+            JOptionPane.showMessageDialog(this, "Erro no tipo dos dados selecionados nos combos.",
+                "Erro de Dados", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbEditarActionPerformed
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        if (jtxId_Ficha.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite o código da ficha!",
+                "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                int idFicha = Integer.parseInt(jtxId_Ficha.getText());
+
+                FichaModel ficha = new FichaModel();
+                ficha.setId_ficha(idFicha);
+
+                FichaController controller = new FichaController();
+                if (controller.excluir(ficha)) {
+                    JOptionPane.showMessageDialog(this, "Ficha excluída com sucesso!");
+                    limparCampos();
+                    inicializa();
+                    preencherTabela();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao excluir ficha!",
+                        "Retorno BD", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Código da ficha inválido!",
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbFecharActionPerformed
+
+    private void jtFichaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtFichaMouseClicked
+        int linha = jtFicha.getSelectedRow();
+        if (linha != -1) {
+
+            jtxId_Ficha.setText(jtFicha.getValueAt(linha, 0).toString());
+
+            String idAluno = jtFicha.getValueAt(linha, 1).toString();
+            String idInstrutor = jtFicha.getValueAt(linha, 2).toString();
+
+            jcbAluno.setSelectedItem(Integer.parseInt(idAluno));
+            jcbInstrutor.setSelectedItem(Integer.parseInt(idInstrutor));
+
+            jtxObjetivo.setText(jtFicha.getValueAt(linha, 3).toString());
+            jftfDataCriacao.setText(jtFicha.getValueAt(linha, 4).toString());
+
+            jbNovo.setEnabled(false);
+            jbSalvar.setEnabled(false);
+            jbEditar.setEnabled(true);
+            jbExcluir.setEnabled(true);
+
+            jtxId_Ficha.setEditable(false);
+            jcbAluno.setEnabled(true);
+            jcbInstrutor.setEnabled(true);
+            jtxObjetivo.setEditable(true);
+            jftfDataCriacao.setEditable(true);
+        }
+    }//GEN-LAST:event_jtFichaMouseClicked
+
+    private void jcbAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbAlunoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbAlunoActionPerformed
+
+    private void jcbInstrutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbInstrutorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbInstrutorActionPerformed
+
+    private void preencherTabela() {
+        FichaController controller = new FichaController();
+        ArrayList<FichaModel> lista = controller.selecionarTodos();
+        DefaultTableModel modeloTabela = (DefaultTableModel) jtFicha.getModel();
+        modeloTabela.setRowCount(0);
+
+        if (lista.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhuma ficha cadastrada!",
+                "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        } else {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+
+            for (FichaModel f : lista) {
+                Integer idAluno = (f.getAluno() != null) ? f.getAluno().getId_aluno() : null;
+                Integer idInstrutor = (f.getInstrutor() != null) ? f.getInstrutor().getId_instrutor() : null;
+
+                String dataFormatada = "";
+                if (f.getData_criacao() != null) {
+                    dataFormatada = sdf.format(f.getData_criacao());
+                }
+
+                modeloTabela.addRow(new Object[] {
+                    f.getId_ficha(),
+                    idAluno,
+                    idInstrutor,
+                    f.getObjetivo(),
+                    dataFormatada
+                });
+            }
+        }
+    }
+
+    private void inicializa() {
+        jtxId_Ficha.setEditable(true);
+        jcbAluno.setEnabled(false);
+        jcbInstrutor.setEnabled(false);
+        jtxObjetivo.setEditable(false);
+        jftfDataCriacao.setEditable(false);
+
+        jbSalvar.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbPesquisar.setEnabled(true);
+        jbNovo.setEnabled(true);
+    }
+    
+    private void limparCampos() {
+        jtxId_Ficha.setText("");
+        jcbAluno.setSelectedIndex(-1);
+        jcbInstrutor.setSelectedIndex(-1);
+        jtxObjetivo.setText("");
+        jftfDataCriacao.setText("");
+    }
+    
+    private void preencherComboBox() {
+        AlunoController alunoController = new AlunoController();
+        ArrayList<AlunoModel> listaAlunos = alunoController.selecionarTodos();
+
+        jcbAluno.removeAllItems();
+        for (AlunoModel aluno : listaAlunos) {
+            jcbAluno.addItem(aluno);
+        }
+
+        InstrutorController instrutorController = new InstrutorController();
+        List<InstrutorModel> listaInstrutores = instrutorController.selecionarTodos();
+
+        jcbInstrutor.removeAllItems();
+        for (InstrutorModel instrutor : listaInstrutores) {
+            jcbInstrutor.addItem(instrutor);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -50,5 +598,25 @@ public class FichaView extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbEditar;
+    private javax.swing.JButton jbExcluir;
+    private javax.swing.JButton jbFechar;
+    private javax.swing.JButton jbNovo;
+    private javax.swing.JButton jbPesquisar;
+    private javax.swing.JButton jbSalvar;
+    private javax.swing.JComboBox<model.AlunoModel> jcbAluno;
+    private javax.swing.JComboBox<model.InstrutorModel> jcbInstrutor;
+    private javax.swing.JFormattedTextField jftfDataCriacao;
+    private javax.swing.JLabel jlCodigoFicha;
+    private javax.swing.JTable jtFicha;
+    private javax.swing.JTextField jtxId_Ficha;
+    private javax.swing.JTextField jtxObjetivo;
     // End of variables declaration//GEN-END:variables
 }

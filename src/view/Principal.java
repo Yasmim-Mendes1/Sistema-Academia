@@ -28,21 +28,205 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        areaTrabalho = new javax.swing.JDesktopPane();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jmCadastro = new javax.swing.JMenu();
+        jmiAluno = new javax.swing.JMenuItem();
+        jmiFicha = new javax.swing.JMenuItem();
+        jmiInstrutor = new javax.swing.JMenuItem();
+        jmiFicha_Exercicio = new javax.swing.JMenuItem();
+        jmiExercicio = new javax.swing.JMenuItem();
+        jmiEquipamento = new javax.swing.JMenuItem();
+        jmRelatorios = new javax.swing.JMenu();
+        jmiAlunosIdade = new javax.swing.JMenuItem();
+        jmiFichasAluno = new javax.swing.JMenuItem();
+        jmiExerciciosFicha = new javax.swing.JMenuItem();
+        jmiEquipamentosEspecialidade = new javax.swing.JMenuItem();
+
+        jMenu2.setText("File");
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Edit");
+        jMenuBar1.add(jMenu3);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout areaTrabalhoLayout = new javax.swing.GroupLayout(areaTrabalho);
+        areaTrabalho.setLayout(areaTrabalhoLayout);
+        areaTrabalhoLayout.setHorizontalGroup(
+            areaTrabalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 504, Short.MAX_VALUE)
+        );
+        areaTrabalhoLayout.setVerticalGroup(
+            areaTrabalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 325, Short.MAX_VALUE)
+        );
+
+        jmCadastro.setText("Cadastro");
+
+        jmiAluno.setText("Aluno");
+        jmiAluno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAlunoActionPerformed(evt);
+            }
+        });
+        jmCadastro.add(jmiAluno);
+
+        jmiFicha.setText("Ficha");
+        jmiFicha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFichaActionPerformed(evt);
+            }
+        });
+        jmCadastro.add(jmiFicha);
+
+        jmiInstrutor.setText("Instrutor");
+        jmiInstrutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiInstrutorActionPerformed(evt);
+            }
+        });
+        jmCadastro.add(jmiInstrutor);
+
+        jmiFicha_Exercicio.setText("Treino");
+        jmiFicha_Exercicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFicha_ExercicioActionPerformed(evt);
+            }
+        });
+        jmCadastro.add(jmiFicha_Exercicio);
+
+        jmiExercicio.setText("Exercício");
+        jmiExercicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiExercicioActionPerformed(evt);
+            }
+        });
+        jmCadastro.add(jmiExercicio);
+
+        jmiEquipamento.setText("Equipamento");
+        jmiEquipamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEquipamentoActionPerformed(evt);
+            }
+        });
+        jmCadastro.add(jmiEquipamento);
+
+        jMenuBar2.add(jmCadastro);
+
+        jmRelatorios.setText("Relatórios");
+        jmRelatorios.setToolTipText("");
+
+        jmiAlunosIdade.setText("Alunos por Idade");
+        jmiAlunosIdade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAlunosIdadeActionPerformed(evt);
+            }
+        });
+        jmRelatorios.add(jmiAlunosIdade);
+
+        jmiFichasAluno.setText("Fichas por Aluno");
+        jmiFichasAluno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFichasAlunoActionPerformed(evt);
+            }
+        });
+        jmRelatorios.add(jmiFichasAluno);
+
+        jmiExerciciosFicha.setText("Exercícios da Ficha");
+        jmiExerciciosFicha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiExerciciosFichaActionPerformed(evt);
+            }
+        });
+        jmRelatorios.add(jmiExerciciosFicha);
+
+        jmiEquipamentosEspecialidade.setText("Equipamentos por Especialidade");
+        jmiEquipamentosEspecialidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEquipamentosEspecialidadeActionPerformed(evt);
+            }
+        });
+        jmRelatorios.add(jmiEquipamentosEspecialidade);
+
+        jMenuBar2.add(jmRelatorios);
+
+        setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(areaTrabalho)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(areaTrabalho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jmiAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAlunoActionPerformed
+        AlunoView aluno = new AlunoView();
+        aluno.setVisible(true);
+        areaTrabalho.add(aluno);
+    }//GEN-LAST:event_jmiAlunoActionPerformed
+
+    private void jmiFichaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFichaActionPerformed
+        FichaView ficha = new FichaView();
+        ficha.setVisible(true);
+        areaTrabalho.add(ficha);
+    }//GEN-LAST:event_jmiFichaActionPerformed
+
+    private void jmiAlunosIdadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAlunosIdadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiAlunosIdadeActionPerformed
+
+    private void jmiFichasAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFichasAlunoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiFichasAlunoActionPerformed
+
+    private void jmiInstrutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiInstrutorActionPerformed
+        InstrutorView instrutor = new InstrutorView();
+        instrutor.setVisible(true);
+        areaTrabalho.add(instrutor);
+    }//GEN-LAST:event_jmiInstrutorActionPerformed
+
+    private void jmiFicha_ExercicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFicha_ExercicioActionPerformed
+        FichaExercicioView ficha_exercicio = new FichaExercicioView();
+        ficha_exercicio.setVisible(true);
+        areaTrabalho.add(ficha_exercicio);
+    }//GEN-LAST:event_jmiFicha_ExercicioActionPerformed
+
+    private void jmiExercicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExercicioActionPerformed
+        ExercicioView exercicio = new ExercicioView();
+        exercicio.setVisible(true);
+        areaTrabalho.add(exercicio);
+    }//GEN-LAST:event_jmiExercicioActionPerformed
+
+    private void jmiEquipamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEquipamentoActionPerformed
+        EquipamentoView equipamento = new EquipamentoView();
+        equipamento.setVisible(true);
+        areaTrabalho.add(equipamento);
+    }//GEN-LAST:event_jmiEquipamentoActionPerformed
+
+    private void jmiExerciciosFichaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExerciciosFichaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiExerciciosFichaActionPerformed
+
+    private void jmiEquipamentosEspecialidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEquipamentosEspecialidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiEquipamentosEspecialidadeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +254,22 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane areaTrabalho;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenu jmCadastro;
+    private javax.swing.JMenu jmRelatorios;
+    private javax.swing.JMenuItem jmiAluno;
+    private javax.swing.JMenuItem jmiAlunosIdade;
+    private javax.swing.JMenuItem jmiEquipamento;
+    private javax.swing.JMenuItem jmiEquipamentosEspecialidade;
+    private javax.swing.JMenuItem jmiExercicio;
+    private javax.swing.JMenuItem jmiExerciciosFicha;
+    private javax.swing.JMenuItem jmiFicha;
+    private javax.swing.JMenuItem jmiFicha_Exercicio;
+    private javax.swing.JMenuItem jmiFichasAluno;
+    private javax.swing.JMenuItem jmiInstrutor;
     // End of variables declaration//GEN-END:variables
 }

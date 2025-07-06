@@ -16,7 +16,7 @@ public class ExercicioModel {
     
     public ExercicioModel(){
         id_exercicio = 0;
-        id_equipamento = new EquipamentoModel();
+        id_equipamento = null;
         nome = "";
         grupo_muscular = "";
     }
@@ -24,7 +24,7 @@ public class ExercicioModel {
     public int getIdExercicio(){
         return id_exercicio;
     }
-    public void setIdExercio(int id_exercicio){
+    public void setIdExercicio(int id_exercicio){
         this.id_exercicio = id_exercicio;
     }
     

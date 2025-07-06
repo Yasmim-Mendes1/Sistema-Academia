@@ -12,15 +12,16 @@ import java.sql.Date;
 
 public class FichaModel {
     private int id_ficha;
-    private int id_aluno;
-    private int id_instrutor;
+    private AlunoModel aluno;
+    private InstrutorModel instrutor;
     private String objetivo;
-    private Date data_criacao;
+    private java.sql.Timestamp data_criacao;
+
     
     public FichaModel(){
         id_ficha = 0;
-        id_aluno = 0;
-        id_instrutor = 0;
+        aluno = null;
+        instrutor = null;
         objetivo = "";
         data_criacao = null;
     }
@@ -33,20 +34,20 @@ public class FichaModel {
         this.id_ficha = id_ficha;
     }
 
-    public int getId_aluno() {
-        return id_aluno;
+    public AlunoModel getAluno() {
+        return aluno;
     }
 
-    public void setId_aluno(int id_aluno) {
-        this.id_aluno = id_aluno;
+    public void setAluno(AlunoModel aluno) {
+        this.aluno = aluno;
     }
 
-    public int getId_instrutor() {
-        return id_instrutor;
+    public InstrutorModel getInstrutor() {
+        return instrutor;
     }
 
-    public void setId_instrutor(int id_instrutor) {
-        this.id_instrutor = id_instrutor;
+    public void setInstrutor(InstrutorModel instrutor) {
+        this.instrutor = instrutor;
     }
 
     public String getObjetivo() {
@@ -57,11 +58,11 @@ public class FichaModel {
         this.objetivo = objetivo;
     }
 
-    public Date getData_criacao() {
-        return data_criacao;
+    public java.sql.Timestamp getData_criacao() {
+        return data_criacao; 
     }
-
-    public void setData_criacao(Date data_criacao) {
-        this.data_criacao = data_criacao;
+    
+    public void setData_criacao(java.sql.Timestamp data_criacao) { 
+        this.data_criacao = data_criacao; 
     }
 }

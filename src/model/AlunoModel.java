@@ -80,4 +80,9 @@ public class AlunoModel {
     public void setData_matricula(Date data_matricula) {
         this.data_matricula = data_matricula;
     }   
+    
+    @Override
+    public String toString() {
+        return String.valueOf(id_aluno);
+    }
 }
