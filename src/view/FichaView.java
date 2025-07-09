@@ -30,7 +30,7 @@ import controller.InstrutorController;
 
 public class FichaView extends javax.swing.JFrame {
     
-     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FichaView.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FichaView.class.getName());
     private List<AlunoModel> listaAlunos = new ArrayList<>();
     private List<InstrutorModel> listaInstrutores = new ArrayList<>();
     
