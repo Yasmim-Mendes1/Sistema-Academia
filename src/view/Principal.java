@@ -5,9 +5,13 @@
 package view;
 
 /**
- *
+
  * @author Yasmim Mendes
  */
+import javax.swing.JOptionPane;
+import relatorios.Relatorio;
+
+
 public class Principal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Principal.class.getName());
@@ -189,7 +193,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiFichaActionPerformed
 
     private void jmiAlunosIdadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAlunosIdadeActionPerformed
-        // TODO add your handling code here:
+        int idaluno = Integer.parseInt(JOptionPane.showInputDialog("Digite o código do aluno para filtrar"));
+        relatorios.Relatorio.relatorio("RelatorioAlunos", "venda", idaluno);
+
     }//GEN-LAST:event_jmiAlunosIdadeActionPerformed
 
     private void jmiFichasAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFichasAlunoActionPerformed
