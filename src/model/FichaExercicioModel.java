@@ -9,34 +9,34 @@ package model;
  * @author Yasmim Mendes
  */
 public class FichaExercicioModel {
-    private FichaModel id_ficha = new FichaModel();
-    private ExercicioModel id_exercicio = new ExercicioModel();
+    private FichaModel ficha = new FichaModel();
+    private ExercicioModel exercicio = new ExercicioModel();
     private int series;
     private int repeticao;
     private int ordem;
     
     public FichaExercicioModel(){
-        id_ficha = null;
-        id_exercicio = null;
+        ficha = null;
+        exercicio = null;
         series = 0;
         repeticao = 0;
         ordem = 0;
     }
 
-    public FichaModel getId_ficha() {
-        return id_ficha;
+    public FichaModel getFicha() {
+        return ficha;
     }
 
-    public void setId_ficha(FichaModel id_ficha) {
-        this.id_ficha = id_ficha;
+    public void setFicha(FichaModel ficha) {
+        this.ficha = ficha;
     }
 
-    public ExercicioModel getId_exercicio() {
-        return id_exercicio;
+    public ExercicioModel getExercicio() {
+        return exercicio;
     }
 
-    public void setId_exercicio(ExercicioModel id_exercicio) {
-        this.id_exercicio = id_exercicio;
+    public void setExercicio(ExercicioModel exercicio) {
+        this.exercicio = exercicio;
     }
 
     public int getSeries() {

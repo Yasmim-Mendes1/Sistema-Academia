@@ -48,4 +48,9 @@ public class ExercicioModel {
     public void setGrupoMuscular(String grupo_muscular){
         this.grupo_muscular = grupo_muscular;
     }
+    
+    @Override
+    public String toString() {
+        return this.getNome();
+    }
 }

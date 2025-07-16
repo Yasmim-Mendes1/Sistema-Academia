@@ -65,4 +65,9 @@ public class FichaModel {
     public void setData_criacao(java.sql.Timestamp data_criacao) { 
         this.data_criacao = data_criacao; 
     }
+    
+    @Override
+    public String toString() {
+        return "Ficha ID: " + this.getId_ficha();
+    }
 }
