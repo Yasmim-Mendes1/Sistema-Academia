@@ -193,8 +193,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiFichaActionPerformed
 
     private void jmiAlunosIdadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAlunosIdadeActionPerformed
-        int idaluno = Integer.parseInt(JOptionPane.showInputDialog("Digite o código do aluno para filtrar"));
-        relatorios.Relatorio.relatorio("RelatorioAlunos", "venda", idaluno);
+        try {
+        // Chama o relatório sem passar parâmetros
+        relatorios.Relatorio.relatorio("AlunoFiltro", "", 0);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Erro ao gerar relatório: " + e.getMessage());
+        e.printStackTrace();
+    }
 
     }//GEN-LAST:event_jmiAlunosIdadeActionPerformed
 
