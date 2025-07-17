@@ -27,6 +27,9 @@ public class ExercicioView extends javax.swing.JFrame {
      */
     public ExercicioView() {
         initComponents();
+        preencherComboBox();
+        preencherTabela();
+        inicializa();
     }
 
     /**
@@ -114,11 +117,11 @@ public class ExercicioView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Código do Equipamento", "Grupo Muscular"
+                "Código", "Código do Equipamento", "Equipamento", "Nome", "Grupo Muscular"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false, false
+                false, true, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -132,7 +135,7 @@ public class ExercicioView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtExercicio);
 
-        jLabel5.setText("Código do equipamento:");
+        jLabel5.setText("Equipamento:");
 
         jcbEquipamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,9 +153,9 @@ public class ExercicioView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
+                        .addGap(137, 137, 137)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jbNovo)
@@ -164,33 +167,36 @@ public class ExercicioView extends javax.swing.JFrame {
                                 .addComponent(jbExcluir)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbFechar))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addGap(47, 47, 47)
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jtxGrupoMuscular))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(77, 77, 77)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtxNome, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(12, 12, 12)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jtxNome, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel5)
+                                                .addGap(4, 4, 4)
+                                                .addComponent(jcbEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jlCodigoFicha)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jtxId_Exercicio, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jbPesquisar))))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel4)
                                         .addGap(4, 4, 4)
-                                        .addComponent(jcbEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jlCodigoFicha)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtxId_Exercicio, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jbPesquisar)))))))
-                .addGap(41, 41, 41))
+                                        .addComponent(jtxGrupoMuscular, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addContainerGap(45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jlCodigoFicha)
@@ -215,7 +221,7 @@ public class ExercicioView extends javax.swing.JFrame {
                     .addComponent(jbEditar)
                     .addComponent(jbExcluir)
                     .addComponent(jbFechar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGap(41, 41, 41)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
@@ -249,6 +255,8 @@ public class ExercicioView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
         ExercicioModel exercicio = new ExercicioModel();
 
@@ -417,14 +425,19 @@ public class ExercicioView extends javax.swing.JFrame {
     private void jtExercicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtExercicioMouseClicked
         int linha = jtExercicio.getSelectedRow();
         if (linha != -1) {
-
             jtxId_Exercicio.setText(jtExercicio.getValueAt(linha, 0).toString());
 
-            Integer idEquipamento = Integer.parseInt(jtExercicio.getValueAt(linha, 1).toString());
-            jcbEquipamento.setSelectedItem(idEquipamento);
+            int idEquipamento = Integer.parseInt(jtExercicio.getValueAt(linha, 1).toString());
+            for (int i = 0; i < jcbEquipamento.getItemCount(); i++) {
+                EquipamentoModel equipamento = jcbEquipamento.getItemAt(i);
+                if (equipamento.getId_equipamento() == idEquipamento) {
+                    jcbEquipamento.setSelectedIndex(i);
+                    break;
+                }
+            }
 
-            jtxNome.setText(jtExercicio.getValueAt(linha, 2).toString());
-            jtxGrupoMuscular.setText(jtExercicio.getValueAt(linha, 3).toString());
+            jtxNome.setText(jtExercicio.getValueAt(linha, 3).toString());
+            jtxGrupoMuscular.setText(jtExercicio.getValueAt(linha, 4).toString());
 
             jbNovo.setEnabled(false);
             jbSalvar.setEnabled(false);
@@ -454,10 +467,11 @@ public class ExercicioView extends javax.swing.JFrame {
         } else {
             for (ExercicioModel e : lista) {
                 modeloTabela.addRow(new Object[] {
-                    e.getIdExercicio(),
-                    e.getIdEquipamento(),
-                    e.getNome(),
-                    e.getGrupoMuscular()
+                e.getIdExercicio(),
+                e.getIdEquipamento().getId_equipamento(),
+                e.getIdEquipamento().getNome(),
+                e.getNome(),
+                e.getGrupoMuscular()
                 });
             }
         }

@@ -20,7 +20,7 @@ public class Conexao {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url= "jdbc:mysql://localhost:3306/academia";
             String usuario = "root";
-            String senha = "1234";
+            String senha = "root";
             conector = DriverManager.getConnection(url,usuario,senha);
             System.out.println("Aplicação conectada com Banco!");
         }catch(ClassNotFoundException e){

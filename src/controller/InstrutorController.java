@@ -46,8 +46,8 @@ public class InstrutorController {
         boolean retorno = false;
         Conexao c = new Conexao();
         c.conectar();
-        String sql = "update instrutor set nome = ?, " 
-        + " telefone = ?, especialidade = ? where = id_instrutor = ?";       
+        String sql = "update instrutor set nome = ?, telefone = ?, especialidade = ? where id_instrutor = ?";
+
         try{
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             sentenca.setString(1, instrutor.getNome());
@@ -109,7 +109,7 @@ public class InstrutorController {
         ArrayList<InstrutorModel> retorno = new ArrayList<>();
         Conexao c = new Conexao();
         c.conectar();
-        String sql = "select * from equipamento";
+        String sql = "select * from instrutor";
         try{
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             ResultSet result = sentenca.executeQuery();
@@ -117,7 +117,7 @@ public class InstrutorController {
                 InstrutorModel i = new InstrutorModel();
                 i.setId_instrutor(result.getInt("id_instrutor"));
                 i.setNome(result.getString("nome"));
-                i.setTelefone(result.getString("Telefone"));
+                i.setTelefone(result.getString("telefone"));
                 i.setEspecialidade(result.getString("especialidade"));
                 retorno.add( i);
             }

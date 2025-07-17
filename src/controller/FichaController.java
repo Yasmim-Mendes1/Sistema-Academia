@@ -12,6 +12,8 @@ import util.Conexao;
 import model.FichaModel;
 import model.AlunoModel;
 import model.InstrutorModel;
+import java.sql.ResultSetMetaData;
+
 
 public class FichaController {
     
@@ -92,12 +94,12 @@ public class FichaController {
         c.conectar();
 
         String sql = "SELECT f.id_ficha, f.objetivo, f.data_criacao, "
-                   + "a.id_aluno, a.nome AS nome_aluno, "
-                   + "i.id_instrutor, i.nome AS nome_instrutor "
-                   + "FROM ficha f "
-                   + "JOIN aluno a ON f.id_aluno = a.id_aluno "
-                   + "JOIN instrutor i ON f.id_instrutor = i.id_instrutor "
-                   + "WHERE f.id_ficha = ?";
+           + "a.id_aluno, a.nome AS nome_aluno, "
+           + "i.id_instrutor AS instrutor_id, i.nome AS nome_instrutor "
+           + "FROM ficha f "
+           + "JOIN aluno a ON f.id_aluno = a.id_aluno "
+           + "JOIN instrutor i ON f.id_instrutor = i.id_instrutor "
+           + "WHERE f.id_ficha = ?";
 
         try {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
@@ -116,7 +118,7 @@ public class FichaController {
                 retorno.setAluno(aluno);
 
                 InstrutorModel instrutor = new InstrutorModel();
-                instrutor.setId_instrutor(result.getInt("id_instrutor"));
+                instrutor.setId_instrutor(result.getInt("instrutor_id"));
                 instrutor.setNome(result.getString("nome_instrutor"));
                 retorno.setInstrutor(instrutor);
             }
@@ -134,8 +136,8 @@ public class FichaController {
         c.conectar();
 
         String sql = "SELECT f.id_ficha, f.objetivo, f.data_criacao, "
-                   + "a.id_aluno, a.nome AS nome_aluno, "
-                   + "i.id_instrutor, i.nome AS nome_instrutor "
+                   + "a.id_aluno AS aluno_id, a.nome AS nome_aluno, "
+                   + "i.id_instrutor AS instrutor_id, i.nome AS nome_instrutor "
                    + "FROM ficha f "
                    + "JOIN aluno a ON f.id_aluno = a.id_aluno "
                    + "JOIN instrutor i ON f.id_instrutor = i.id_instrutor";
@@ -152,12 +154,12 @@ public class FichaController {
                 ficha.setData_criacao(result.getTimestamp("data_criacao"));
 
                 AlunoModel aluno = new AlunoModel();
-                aluno.setId_aluno(result.getInt("id_aluno"));
+                aluno.setId_aluno(result.getInt("aluno_id"));
                 aluno.setNome(result.getString("nome_aluno"));
                 ficha.setAluno(aluno);
 
                 InstrutorModel instrutor = new InstrutorModel();
-                instrutor.setId_instrutor(result.getInt("id_instrutor"));
+                instrutor.setId_instrutor(result.getInt("instrutor_id"));
                 instrutor.setNome(result.getString("nome_instrutor"));
                 ficha.setInstrutor(instrutor);
 

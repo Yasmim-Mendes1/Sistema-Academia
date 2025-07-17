@@ -38,6 +38,9 @@ public class FichaView extends javax.swing.JFrame {
     public FichaView() {
         initComponents();
         preencherComboBox();
+        preencherTabela();
+        inicializa();
+        limparCampos();
     }
 
     /**
